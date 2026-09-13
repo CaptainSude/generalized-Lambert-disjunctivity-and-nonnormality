@@ -1,0 +1,18 @@
+# Lean build products and downloaded dependencies
+.lake/
+*.olean
+*.ilean
+*.ir
+*.log
+
+# LaTeX build products (keep the paper's PDF)
+paper/*.aux
+paper/*.out
+paper/*.toc
+paper/*.synctex.gz
+paper/*.fls
+paper/*.fdb_latexmk
+
+# Local operating-system files
+.DS_Store
+Thumbs.db
