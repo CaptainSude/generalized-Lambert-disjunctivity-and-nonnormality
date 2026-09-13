@@ -1,0 +1,443 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=27mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,amsmath,amssymb,amsthm,microtype}
+\usepackage[colorlinks=true,linkcolor=blue!50!black,citecolor=blue!50!black,urlcolor=blue!50!black]{hyperref}
+\usepackage{xcolor}
+\hypersetup{pdftitle={Every word, unequal frequencies: digits of power Lambert series},pdfauthor={},pdfsubject={Disjunctivity, positive word frequencies, and nonnormality of power Lambert series}}
+\newcommand{\T}{\mathbb T}
+\newcommand{\N}{\mathbb N}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\E}{\mathbb E}
+\newcommand{\ind}{\mathbf 1}
+\newcommand{\dd}{\,d}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt minus 1pt}
+\setlength{\emergencystretch}{1.5em}
+\raggedbottom
+
+\begin{document}
+\begin{center}
+{\Large\bfseries Every word, unequal frequencies:\\[3pt]
+digits of power Lambert series}
+\end{center}
+\vspace{3pt}
+
+For integers $b,r\ge2$, consider
+\[
+L_{b,r}=\sum_{m=1}^{\infty}\frac{1}{b^{m^r}-1}.
+\]
+A real number is \emph{disjunctive in base $b$} if every finite word over
+$\{0,\ldots,b-1\}$ occurs in its fractional base-$b$ expansion. It is
+\emph{normal in base $b$} if every word of length $\ell$ has limiting
+frequency $b^{-\ell}$. Occurrences here may overlap, and frequencies are
+taken along all initial segments.
+
+\begin{theorem}\label{thm:main}
+For every $b,r\ge2$, every finite base-$b$ word has a strictly positive
+limiting frequency in $L_{b,r}$, but $L_{b,r}$ is not normal in base $b$.
+In particular, it is disjunctive and irrational.
+
+More precisely, the empirical measures of $\{b^nL_{b,r}\}$ converge to an
+explicit probability measure $\nu_{b,r}$ on $\T=\mathbb R/\Z$.
+This measure is invariant and ergodic under $T_b(x)=bx\pmod1$, has no
+atoms, gives positive mass to every nonempty open set, and has
+Kolmogorov--Sinai entropy zero.
+\end{theorem}
+
+The proof has two parts. Congruences force a prescribed word while an
+average estimate controls the carry from later terms. Separately, a
+periodic approximation identifies the limiting distribution and shows
+that its entropy is zero. The arithmetic construction develops the
+Chowla--Erd\H{o}s method as used by Duverney, Duverney--Tachiya, and
+Vandehey~\cite{Duverney,DT,Vandehey}. Irrationality of these constants
+already follows from \cite[Corollary 1.2]{DT}; the issue here is their
+digit distribution.
+
+\section{Forcing a word}
+
+Fix $b,r\ge2$ and write $L=L_{b,r}$. For $v\ge1$, let
+\[
+c_r(v)=\#\{d\ge1:d^r\mid v\}
+      =\prod_{p^a\parallel v}\left(\left\lfloor\frac a r\right\rfloor+1\right).
+\]
+Expanding each denominator as a geometric series gives
+\begin{equation}\label{eq:carry}
+L=\sum_{v\ge1}c_r(v)b^{-v},\qquad
+\{b^nL\}=\left\{\sum_{j\ge1}c_r(n+j)b^{-j}\right\}.
+\end{equation}
+All rearrangements are justified by nonnegativity and $c_r(v)\le v$.
+The coefficients need not be digits: this is why the carry matters.
+
+\subsection*{Two elementary estimates}
+
+\begin{lemma}[Means on a progression]\label{lem:mean}
+For positive integers $u,Q$,
+\[
+\lim_{M\to\infty}\frac1M\sum_{m=0}^{M-1}c_r(u+Qm)
+=\sum_{d\ge1}\frac{\gcd(d^r,Q)}{d^r}
+  \ind_{\gcd(d^r,Q)\mid u}.
+\]
+In the Euler product on the right, primes not dividing $Q$ contribute
+factors $(1-p^{-r})^{-1}$. If $p^s\parallel Q$ with
+$s=r(B-1)+1$ for an integer $B\ge1$, its factor is at most $B+1$;
+it is $1$ if $p\nmid u$.
+\end{lemma}
+
+\begin{proof}
+The congruence $d^r\mid u+Qm$ is either insoluble or one residue class
+modulo $d^r/\gcd(d^r,Q)$. This gives the stated limit for each $d$.
+The average of its indicator is at most $(u+Q)/d^r$: the progression
+values are distinct positive integers bounded by $u+QM$.
+Since $\sum d^{-r}<\infty$, dominated convergence permits summation.
+
+Multiplicativity gives the Euler product. If $p^s\nmid u$, the valuation
+at $p$ is fixed below $s$, and its factor is at most $B$.
+If $p^s\mid u$, the factor is
+\[
+B+\sum_{k\ge1}p^{s-r(B-1+k)}
+ =B+\frac{p}{p^r-1}\le B+1.
+\]
+If $p\nmid u$, the valuation is zero and the factor is $1$.
+\end{proof}
+
+The same domination allows passage through a weighted tail: for fixed
+$u,Q,H$, the mean of $\sum_{j>H}c_r(u+Qm+j)b^{-j}$ is the sum of its
+termwise means. Indeed, the summable majorant is
+$(u+Q+j)\zeta(r)b^{-j}$.
+
+\begin{lemma}[Power-free values]\label{lem:sieve}
+If $u,v\ge1$ and $\gcd(u,v)=1$, then the indices $m\ge0$ for which
+$u+vm$ is $r$-free have lower density at least $1/4$.
+Here $r$-free means divisible by no $p^r$ with $p$ prime.
+\end{lemma}
+
+\begin{proof}
+A prime dividing $v$ divides no progression value. Every other prime
+excludes at most $M/p^r+1$ of the first $M$ indices. Only primes at most
+$\sqrt{u+vM}$ can exclude a value, since $r\ge2$. Thus the excluded
+proportion is at most
+\[
+\sum_p p^{-r}+O_{u,v}(M^{-1/2})
+\le\sum_{n=2}^{\infty}n^{-2}+O_{u,v}(M^{-1/2})
+\le\frac34+O_{u,v}(M^{-1/2}).
+\]
+The last inequality follows from $1/4+\int_2^\infty x^{-2}\dd x=3/4$.
+\end{proof}
+
+\subsection*{The congruences and the carry}
+
+Let a prescribed word have length $\ell\ge1$ and integer value
+$0\le w<b^\ell$. Its digit interval is
+$I_w=[w/b^\ell,(w+1)/b^\ell)$. Put
+\[
+t=\ell+1,\qquad A=bw+1,\qquad e=r(A-1),\qquad
+\eta=\frac{1}{2b^t}.
+\]
+The closed interval
+\begin{equation}\label{eq:guard}
+K_w=\left[\frac A{b^t},\frac A{b^t}+\eta\right]
+\quad\hbox{lies strictly inside }I_w.
+\end{equation}
+The extra digit $1$ leaves room for a small positive carry.
+
+Choose a large integer $H\ge\max(t,3)$; its size will be fixed below.
+For each $j\in\{0,\ldots,H\}\setminus\{t\}$ choose $H$ primes, all
+distinct and greater than $H^3+H+2$. Call these the primes assigned to
+$j$, let $D$ be their total number, and put
+\[
+s=r(b-1)+1,\qquad Q=2^{e+1}\prod_{p\text{ assigned}}p^s.
+\]
+We will use only $D\le H(H+1)$. The Chinese remainder theorem gives
+$0\le a<Q$ satisfying
+\[
+a+t\equiv2^e\pmod{2^{e+1}},\qquad
+a+j\equiv p^{s-1}\pmod{p^s}
+\quad\text{for each prime $p$ assigned to $j$}.
+\]
+Take $n=a+Qm$ with $m\ge1$. Each prime assigned to $j$ has exact
+valuation $r(b-1)$ in $n+j$, so contributes a factor $b$ to $c_r(n+j)$.
+Consequently,
+\begin{equation}\label{eq:integral}
+b^j\mid c_r(n+j)\qquad(1\le j\le H,\ j\ne t).
+\end{equation}
+
+Write $n+t=2^e u_m$. The $u_m$ form an odd positive arithmetic
+progression of step $Q/2^e$. No assigned prime divides $n+t$: a prime
+assigned to $j$ would then divide $t-j$, although $0<|t-j|\le H<p$.
+Thus the cofactor progression is coprime. By Lemma~\ref{lem:sieve},
+$u_m$ is $r$-free on a set of lower density at least $1/4$.
+At those indices,
+\begin{equation}\label{eq:target}
+c_r(n+t)=\left(\frac e r+1\right)c_r(u_m)=A.
+\end{equation}
+
+It remains to control $R_H(n)=\sum_{j>H}c_r(n+j)b^{-j}$.
+Let $M_j$ be the mean of $c_r(a+Qm+j)$ on this progression, and put
+$C=2(A+1)$. If $H<j\le H^3$, no assigned prime divides $n+j$:
+subtracting its assigned shift gives a nonzero difference smaller than
+the prime. Lemma~\ref{lem:mean}, together with $\zeta(r)\le2$, gives
+\[
+M_j\le C\quad(H<j\le H^3),\qquad
+M_j\le C(b+1)^{H(H+1)}\quad(j>H^3).
+\]
+The factor at $2$ is at most $A+1$; each assigned prime costs at most
+$b+1$ when it is not excluded. Summing the two geometric tails yields
+\begin{equation}\label{eq:tailmean}
+\lim_{M\to\infty}\frac1M\sum_{m=1}^{M}R_H(a+Qm)
+\le \frac C{b-1}\left(b^{-H}+(b+1)^{H(H+1)}b^{-H^3}\right).
+\end{equation}
+For $H\ge3$, the second term in parentheses is at most $b^{-H}$:
+use $b+1\le b^2$ and $2H(H+1)+H\le H^3$.
+Choose $H$ so that the right side of~\eqref{eq:tailmean} is less than
+$\eta/16$, and only then choose the primes. The estimate is independent
+of their sizes.
+
+Markov's inequality shows that $R_H(n)\ge\eta$ on a set of upper
+density less than $1/16$ within the progression. Removing these indices
+from the power-free set leaves positive lower density. On the remaining
+indices, \eqref{eq:carry}, \eqref{eq:integral}, and \eqref{eq:target} give
+\[
+\{b^nL\}=\frac A{b^t}+R_H(n)\in K_w.
+\]
+A set of positive lower density in one fixed progression has positive
+lower density among all integers. We have therefore proved:
+\begin{equation}\label{eq:visits}
+\liminf_{N\to\infty}\frac1N
+ \#\{0\le n<N:\{b^nL\}\in K_w\}>0
+\quad\text{for every word }w.
+\end{equation}
+In particular $L$ is disjunctive. It is irrational, since the radix orbit
+of a rational number is finite, whereas \eqref{eq:visits} makes this
+orbit dense in the circle.
+
+\section{The limiting distribution}
+
+The second part of the proof starts from a different expression for the
+same carry. For $d\ge1$, put
+\[
+g_d(n)=\frac{b^{n\bmod d}}{b^d-1},\qquad
+W(n)=\sum_{m\ge1}g_{m^r}(n),\qquad
+W_U(n)=\sum_{m=1}^{U}g_{m^r}(n).
+\]
+Summing the geometric series over $j$ with $d\mid n+j$ shows that
+$W(n)=\sum_{j\ge1}c_r(n+j)b^{-j}$. Thus $W(n)\pmod1=\{b^nL\}$.
+
+\subsection*{An approximation valid for every prefix}
+
+The $d$ values of $g_d$ in a period increase from its minimum to its
+maximum and have total $1/(b-1)$. The average over an initial part of
+that period is therefore at most the complete-period average.
+Splitting any prefix into complete periods and one initial part gives
+\[
+\frac1N\sum_{n=0}^{N-1}g_d(n)\le\frac{1}{d(b-1)}
+\qquad(N\ge1).
+\]
+Summing over $m>U$ proves the key estimate
+\begin{equation}\label{eq:uniform}
+\sup_{N\ge1}\frac1N\sum_{n=0}^{N-1}|W(n)-W_U(n)|
+\le\varepsilon_U:=\frac{1}{b-1}\sum_{m>U}m^{-r}
+\longrightarrow0.
+\end{equation}
+Each $W_U$ is periodic, with period dividing $(U!)^r$.
+The uniformity in $N$ lets us pass from these periodic sequences to the
+actual digit sequence.
+
+\subsection*{A compact group model}
+
+Record all power residues at once:
+\[
+G=\overline{\{(n\bmod m^r)_{m\ge1}:n\in\Z\}}
+\ \subseteq\ \prod_{m\ge1}\Z/m^r\Z.
+\]
+This is a compact group. Let $\mu$ be its Haar probability measure and
+$R(x)=x+\mathbf1$, where $\mathbf1=(1\bmod m^r)_{m\ge1}$.
+Any finite collection of coordinates ranges over a single finite cyclic
+orbit. Haar measure projects to the uniform measure on that orbit.
+The rotation $R$ is ergodic: an invariant $L^2$ function is invariant
+under the dense subgroup generated by $\mathbf1$, hence, by continuity
+of translations in $L^2$, under every translation, and is constant
+almost everywhere. This is the usual compact-group rotation argument
+\cite{MF}. Related residue models in arithmetic dynamics appear in
+\cite{CS,CV}.
+
+For $x\in G$, let $\rho_m(x)\in\{0,\ldots,m^r-1\}$ represent its
+$m$th coordinate. Define
+\[
+W(x)=\sum_{m\ge1}\frac{b^{\rho_m(x)}}{b^{m^r}-1},\qquad
+\Phi(x)=W(x)\pmod1,\qquad \nu=\Phi_*\mu.
+\]
+Every coordinate is uniform, so
+\[
+\int_G W\dd\mu=\frac{\zeta(r)}{b-1}<\infty.
+\]
+The series is therefore finite almost everywhere; define $\Phi=0$ on
+its null exceptional set. Each summand satisfies
+\[
+b\frac{b^{\rho_m(x)}}{b^{m^r}-1}
+-\frac{b^{\rho_m(Rx)}}{b^{m^r}-1}\in\Z.
+\]
+Reduce finite partial sums modulo $1$ and pass to the limit where both
+series converge. This proves
+\begin{equation}\label{eq:factor}
+\Phi\circ R=T_b\circ\Phi\quad\mu\text{-almost everywhere}.
+\end{equation}
+Thus $\nu$ is invariant and ergodic under $T_b$.
+
+Let $W_U(x)$ be the corresponding finite sum on $G$. Its Haar tail
+satisfies $\int|W-W_U|\dd\mu=\varepsilon_U$.
+If $f$ is a Lipschitz function on the circle, \eqref{eq:uniform} bounds
+the difference between the integer averages of $f(W)$ and $f(W_U)$ by
+$\operatorname{Lip}(f)\varepsilon_U$. The same bound holds for their
+Haar integrals. For fixed $U$, the integer average of $f(W_U)$ converges
+to its Haar integral, because it runs periodically through the finite
+cyclic quotient. Hence
+\[
+\limsup_{N\to\infty}
+\left|\frac1N\sum_{n<N}f(\{b^nL\})-\int f\dd\nu\right|
+\le2\operatorname{Lip}(f)\varepsilon_U.
+\]
+Letting $U\to\infty$, and using uniform approximation of continuous
+circle functions by Lipschitz functions, proves
+\begin{equation}\label{eq:weak}
+\frac1N\sum_{n<N}\delta_{\{b^nL\}}\ \Longrightarrow\ \nu.
+\end{equation}
+This identifies the distribution of the specified orbit, not just of
+almost every point of the model.
+
+\subsection*{From the distribution to word frequencies}
+
+For the closed interval $K_w$, weak convergence gives
+\[
+\nu(K_w)\ge\limsup_{N\to\infty}\frac1N
+\#\{n<N:\{b^nL\}\in K_w\}>0
+\]
+by \eqref{eq:visits}. Every nonempty open arc contains a digit interval,
+so $\nu$ has full support.
+
+An ergodic invariant probability measure with an atom is supported on a
+finite periodic orbit. Indeed, atom masses cannot decrease under forward
+iteration, so the orbit of an atom must eventually repeat. The resulting
+cycle has positive measure and is invariant modulo a null set;
+ergodicity gives it full measure. Full support on the circle excludes
+this possibility. Thus $\nu$ has no atoms.
+
+The boundary of $I_w$ is finite and therefore has measure zero.
+Equation~\eqref{eq:weak} now gives the limiting word frequency
+\[
+\lim_{N\to\infty}\frac1N
+\#\{n<N:\{b^nL\}\in I_w\}=\nu(I_w)>0.
+\]
+
+\section{Zero entropy and failure of normality}
+
+Here entropy measures the average information per symbol in a stationary
+sequence of finite labels. For a finite random variable $X$ with
+probabilities $p_i$, its Shannon entropy is
+$H(X)=-\sum_i p_i\log p_i$, with $0\log0=0$.
+We prove directly that every finite measurable labeling of the group
+rotation has entropy rate zero.
+
+Let $X:G\to\{1,\ldots,k\}$ be such a labeling. Sets depending on
+finitely many coordinates generate the Borel sigma algebra of $G$.
+Consequently $X$ can be approximated by a finite-coordinate labeling
+$Y$ with mismatch probability $p=\mu(X\ne Y)$ as small as desired.
+For completeness, measurable sets approximable in measure by the
+finite-coordinate algebra form a sigma algebra; approximate the finitely
+many fibers of $X$ and assign any overlaps in a fixed order.
+There is an integer $P\ge1$ such that $Y\circ R^P=Y$.
+
+Define the error label $E$ to be $*$ when $X=Y$, and $X$ otherwise.
+The first $n$ labels of $X$ along an orbit are determined by the first
+$P$ labels of $Y$ and the first $n$ error labels. By the elementary
+reconstruction and subadditivity inequalities for Shannon entropy,
+and invariance of $\mu$,
+\[
+H(X,X\circ R,\ldots,X\circ R^{n-1})
+\le P\log k+nH(E).
+\]
+Moreover,
+\[
+H(E)\le -p\log p-(1-p)\log(1-p)+p\log k\longrightarrow0
+\quad(p\to0).
+\]
+Divide by $n$, let $n\to\infty$, and then improve the approximation.
+Every finite labeling has entropy rate zero, so their supremum, the
+Kolmogorov--Sinai entropy of $R$, is zero. Iterating
+\eqref{eq:factor} outside a null set shows that pulling a circle
+labeling back through $\Phi$ preserves all its block distributions.
+Therefore $T_b$ also has entropy zero with respect to $\nu$.
+
+If $L$ were normal, its limiting word frequencies would give each of
+the $b^n$ length-$n$ digit intervals measure $b^{-n}$ under $\nu$.
+The digit labeling would then have block entropy $n\log b$, and hence
+positive entropy rate $\log b$. This contradicts the preceding result
+and completes the proof of Theorem~\ref{thm:main}.
+
+\paragraph{Lean verification.}
+The accompanying source package proves all conclusions of
+Theorem~\ref{thm:main} in
+\texttt{PowerLambert.powerLambert\_full\_theorem}, with only the
+hypotheses $b,r\ge2$. It uses Lean 4.34.0-rc2, Mathlib~\cite{Mathlib},
+and the Shannon entropy library from the Polynomial Freiman--Ruzsa
+formalization~\cite{PFR}; exact revisions and build instructions are
+recorded in the package. The axiom audit contains only Lean's standard
+\texttt{propext}, \texttt{Classical.choice}, and \texttt{Quot.sound}.
+The formalization also proves nonnormality directly from periodic
+approximation; the paper uses the shorter entropy consequence above.
+
+\begin{thebibliography}{9}
+\small\raggedright
+\setlength{\itemsep}{3pt}
+\bibitem{Duverney}
+D. Duverney, \emph{Arithmetical functions and irrationality of Lambert
+series}, AIP Conference Proceedings \textbf{1385} (2011), 5--16.
+\href{https://danielduverney.fr/documents/theorie-des-nombres/TokyoNT.pdf}{Author manuscript}.
+
+\bibitem{DT}
+D. Duverney and Y. Tachiya, \emph{Refinement of the Chowla--Erd\H{o}s
+method and linear independence of certain Lambert series},
+Forum Mathematicum \textbf{31} (2019), 1557--1566.
+\href{https://danielduverney.fr/documents/theorie-des-nombres/DuverneyTachiya190522.pdf}{Author manuscript}.
+
+\bibitem{Vandehey}
+J. Vandehey, \emph{On an incomplete argument of Erd\H{o}s on the
+irrationality of Lambert series}, Integers \textbf{13} (2013), A58.
+\href{https://arxiv.org/abs/1206.0340}{arXiv:1206.0340}.
+
+\bibitem{MF}
+M. Mirzakhani, lectures; T. Feng, notes, \emph{Introduction to Ergodic
+Theory} (2014).
+\href{https://math.berkeley.edu/~fengt/ergodic_theory.pdf}{Lecture notes}.
+
+\bibitem{CS}
+F. Cellarosi and Ya. G. Sinai, \emph{Ergodic properties of square-free
+numbers}, Journal of the European Mathematical Society \textbf{15}
+(2013), 1343--1374.
+\href{https://ems.press/journals/jems/articles/11437}{Journal article}.
+
+\bibitem{CV}
+F. Cellarosi and I. Vinogradov, \emph{Ergodic properties of $k$-free
+integers in number fields}, Journal of Modern Dynamics \textbf{7}
+(2013), 461--488.
+\href{https://arxiv.org/abs/1304.0214}{arXiv:1304.0214}.
+
+\bibitem{Mathlib}
+The Mathlib contributors, \emph{The Lean mathematical library},
+revision \texttt{de2ef68216c6}.
+\href{https://github.com/leanprover-community/mathlib4/tree/de2ef68216c6074f338c8e61890ee0a379ddfb9b}{Source repository}.
+
+\bibitem{PFR}
+The Polynomial Freiman--Ruzsa formalization contributors,
+\emph{Polynomial Freiman--Ruzsa conjecture formalization},
+Shannon entropy library, revision \texttt{3d7898164ebf}.
+\href{https://github.com/teorth/pfr/tree/3d7898164ebff70a809dce618f9082a7b39e7850}{Source repository}.
+\end{thebibliography}
+
+\medskip
+{\footnotesize Text licensed under
+\href{https://creativecommons.org/licenses/by/4.0/}{CC BY 4.0}.
+The accompanying Lean code is licensed under Apache 2.0.}
+\end{document}
